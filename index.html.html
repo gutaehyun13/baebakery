@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PÂNE — Artisan Baking</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black: #0e0e0e;
+      --off-white: #f7f6f3;
+      --mid: #c8c4bb;
+      --subtle: #e8e6e1;
+      --accent: #c8622a;
+      --text-secondary: #6b6860;
+      --border: rgba(14,14,14,0.1);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--off-white);
+      color: var(--black);
+      font-family: 'DM Sans', 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 3rem;
+      height: 64px;
+      background: rgba(247,246,243,0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      transition: height 0.3s ease;
+    }
+
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--black);
+    }
+
+    .nav-links {
+      display: flex; gap: 2.5rem; list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      transition: color 0.25s;
+    }
+
+    .nav-links a:hover { color: var(--black); }
+
+    .nav-cta {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--off-white);
+      background: var(--black);
+      padding: 0.55rem 1.4rem;
+      transition: background 0.25s;
+    }
+
+    .nav-cta:hover { background: var(--accent); }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      padding-top: 64px;
+      display: grid;
+      grid-template-rows: 1fr auto;
+    }
+
+    .hero-main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .hero-text {
+      padding: 6rem 5rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      border-right: 1px solid var(--border);
+    }
+
+    .hero-kicker {
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: up 0.7s 0.1s ease forwards;
+    }
+
+    .hero-h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3.5rem, 5.5vw, 6rem);
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      color: var(--black);
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: up 0.7s 0.25s ease forwards;
+    }
+
+    .hero-h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-desc {
+      font-size: 0.95rem;
+      line-height: 1.85;
+      color: var(--text-secondary);
+      max-width: 340px;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: up 0.7s 0.4s ease forwards;
+    }
+
+    .hero-actions {
+      display: flex; align-items: center; gap: 2rem;
+      opacity: 0;
+      animation: up 0.7s 0.55s ease forwards;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 0.9rem 2.2rem;
+      background: var(--black);
+      color: var(--off-white);
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      transition: background 0.25s;
+    }
+
+    .btn-primary:hover { background: var(--accent); }
+
+    .btn-ghost {
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 1px solid var(--mid);
+      padding-bottom: 2px;
+      transition: border-color 0.25s, color 0.25s;
+    }
+
+    .btn-ghost:hover { color: var(--accent); border-color: var(--accent); }
+
+    .hero-visual {
+      background: var(--black);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-visual-inner {
+      position: relative;
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* geometric composition */
+    .geo-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(247,246,243,0.08);
+    }
+    .geo-ring-1 { width: 480px; height: 480px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+    .geo-ring-2 { width: 320px; height: 320px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+    .geo-ring-3 { width: 160px; height: 160px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+
+    .hero-big-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22rem;
+      color: rgba(247,246,243,0.04);
+      position: absolute;
+      user-select: none;
+      letter-spacing: -0.05em;
+    }
+
+    .hero-label-stack {
+      position: relative; z-index: 2;
+      text-align: center;
+    }
+
+    .hero-label-stack .big-letter {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 7rem;
+      color: rgba(247,246,243,0.9);
+      line-height: 1;
+      opacity: 0;
+      animation: fadeIn 1s 0.6s ease forwards;
+    }
+
+    .hero-label-stack .sub-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(247,246,243,0.35);
+      margin-top: 0.5rem;
+      opacity: 0;
+      animation: fadeIn 1s 0.8s ease forwards;
+    }
+
+    .hero-corner-tag {
+      position: absolute;
+      bottom: 2rem; right: 2rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(247,246,243,0.25);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-item {
+      padding: 2rem 3rem;
+      border-right: 1px solid var(--border);
+      opacity: 0;
+      animation: up 0.6s ease forwards;
+    }
+
+    .stat-item:nth-child(1) { animation-delay: 0.7s; }
+    .stat-item:nth-child(2) { animation-delay: 0.85s; }
+    .stat-item:nth-child(3) { animation-delay: 1s; border-right: none; }
+
+    .stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.2rem;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    /* ─── SECTION COMMON ─── */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 3rem;
+    }
+
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 24px; height: 1px;
+      background: var(--accent);
+    }
+
+    /* ─── SIGNATURE ─── */
+    .signature {
+      padding: 8rem 5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .signature-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 5rem;
+    }
+
+    .signature-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.4rem, 4vw, 3.8rem);
+      line-height: 1.1;
+    }
+
+    .signature-title em { font-style: italic; color: var(--accent); }
+
+    .signature-intro {
+      max-width: 320px;
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      padding-bottom: 0.25rem;
+    }
+
+    .signature-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .sig-card {
+      background: var(--off-white);
+      padding: 3rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s ease;
+      cursor: default;
+    }
+
+    .sig-card:hover { background: var(--subtle); }
+
+    .sig-card-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 5rem;
+      color: rgba(14,14,14,0.05);
+      position: absolute;
+      top: 1rem; right: 1.5rem;
+      line-height: 1;
+      user-select: none;
+      transition: color 0.3s;
+    }
+
+    .sig-card:hover .sig-card-num { color: rgba(200,98,42,0.08); }
+
+    .sig-tag {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .sig-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .sig-desc {
+      font-size: 0.85rem;
+      line-height: 1.75;
+      color: var(--text-secondary);
+    }
+
+    .sig-card-main {
+      grid-column: 1;
+      grid-row: 1 / 3;
+    }
+
+    .sig-card-main .sig-name { font-size: 2.2rem; }
+
+    /* ─── MENU ─── */
+    .menu {
+      padding: 8rem 5rem;
+      border-top: 1px solid var(--border);
+      background: var(--black);
+      color: var(--off-white);
+    }
+
+    .menu .section-label { color: rgba(247,246,243,0.4); }
+
+    .menu-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 5rem;
+    }
+
+    .menu-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.4rem, 4vw, 3.8rem);
+      line-height: 1.1;
+      color: var(--off-white);
+    }
+
+    .menu-title em { font-style: italic; color: var(--accent); }
+
+    .menu-note {
+      font-size: 0.8rem;
+      color: rgba(247,246,243,0.35);
+      max-width: 260px;
+      line-height: 1.7;
+      text-align: right;
+    }
+
+    .menu-categories {
+      display: flex;
+      gap: 1px;
+      margin-bottom: 1px;
+      background: rgba(247,246,243,0.06);
+    }
+
+    .menu-cat-btn {
+      padding: 0.9rem 2rem;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: transparent;
+      color: rgba(247,246,243,0.4);
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s, color 0.25s;
+    }
+
+    .menu-cat-btn.active,
+    .menu-cat-btn:hover {
+      background: rgba(247,246,243,0.06);
+      color: var(--off-white);
+    }
+
+    .menu-cat-btn.active { color: var(--accent); }
+
+    .menu-list {
+      background: rgba(247,246,243,0.03);
+    }
+
+    .menu-row {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 2rem;
+      padding: 1.8rem 2.5rem;
+      border-bottom: 1px solid rgba(247,246,243,0.06);
+      transition: background 0.2s;
+      cursor: default;
+    }
+
+    .menu-row:last-child { border-bottom: none; }
+    .menu-row:hover { background: rgba(247,246,243,0.04); }
+
+    .menu-row-idx {
+      font-family: 'DM Serif Display', serif;
+      font-size: 0.85rem;
+      color: rgba(247,246,243,0.18);
+      width: 2rem;
+    }
+
+    .menu-row-info {}
+
+    .menu-row-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      color: var(--off-white);
+      margin-bottom: 0.25rem;
+    }
+
+    .menu-row-desc {
+      font-size: 0.8rem;
+      color: rgba(247,246,243,0.38);
+      line-height: 1.5;
+    }
+
+    .menu-row-price {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      color: var(--off-white);
+      white-space: nowrap;
+      text-align: right;
+    }
+
+    /* ─── INFO ─── */
+    .info {
+      padding: 8rem 5rem;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .info-block {
+      background: var(--off-white);
+      padding: 3rem 4rem 3rem 0;
+    }
+
+    .info-block:last-child {
+      padding: 3rem 0 3rem 4rem;
+    }
+
+    .info-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.2rem;
+      line-height: 1.1;
+      margin-bottom: 3rem;
+    }
+
+    .info-title em { font-style: italic; color: var(--accent); }
+
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .info-table tr { border-top: 1px solid var(--border); }
+    .info-table tr:last-child { border-bottom: 1px solid var(--border); }
+
+    .info-table td {
+      padding: 1.1rem 0;
+      vertical-align: top;
+    }
+
+    .info-table td:first-child {
+      width: 120px;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      padding-top: 1.25rem;
+    }
+
+    .info-table td:last-child {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--black);
+    }
+
+    .info-closed {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--off-white);
+      background: var(--accent);
+      padding: 0.2rem 0.5rem;
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+
+    .map-placeholder {
+      margin-top: 2.5rem;
+      height: 200px;
+      background: var(--subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .map-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 39px,
+        var(--border) 39px,
+        var(--border) 40px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 39px,
+        var(--border) 39px,
+        var(--border) 40px
+      );
+    }
+
+    .map-pin {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+    }
+
+    .map-pin-dot {
+      width: 12px; height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(200,98,42,0.2);
+    }
+
+    .map-pin-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--off-white);
+      padding: 0.3rem 0.7rem;
+    }
+
+    /* ─── CONTACT ─── */
+    .contact {
+      padding: 8rem 5rem;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 8rem;
+      align-items: start;
+    }
+
+    .contact-left {}
+
+    .contact-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-title em { font-style: italic; color: var(--accent); }
+
+    .contact-body {
+      font-size: 0.9rem;
+      line-height: 1.85;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-channels {
+      display: flex; flex-direction: column; gap: 0.9rem;
+    }
+
+    .contact-ch {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.82rem;
+      color: var(--black);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contact-ch:hover { color: var(--accent); }
+
+    .ch-pill {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      background: var(--subtle);
+      padding: 0.25rem 0.7rem;
+      min-width: 72px;
+      text-align: center;
+    }
+
+    /* Form */
+    .contact-form {
+      display: flex; flex-direction: column; gap: 0;
+    }
+
+    .cf-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      margin-bottom: 1px;
+    }
+
+    .cf-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cf-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      padding: 0.8rem 1rem 0.4rem;
+      background: var(--subtle);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cf-input,
+    .cf-select,
+    .cf-textarea {
+      border: none;
+      border-bottom: 1px solid var(--border);
+      background: var(--subtle);
+      padding: 0.8rem 1rem;
+      font-family: 'DM Sans', 'Noto Sans KR', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--black);
+      outline: none;
+      transition: background 0.2s, border-color 0.2s;
+      appearance: none;
+    }
+
+    .cf-input:focus,
+    .cf-select:focus,
+    .cf-textarea:focus {
+      background: #eeece7;
+      border-bottom-color: var(--accent);
+    }
+
+    .cf-textarea { resize: vertical; min-height: 90px; }
+
+    .cf-full {
+      margin-bottom: 1px;
+    }
+
+    .cf-full .cf-label { display: block; }
+    .cf-full .cf-input,
+    .cf-full .cf-select,
+    .cf-full .cf-textarea {
+      width: 100%;
+      display: block;
+    }
+
+    .cf-submit {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 1.5rem;
+      background: var(--black);
+      color: var(--off-white);
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.25s;
+      margin-top: 1px;
+    }
+
+    .cf-submit:hover { background: var(--accent); }
+
+    .cf-submit-arrow {
+      font-size: 1.1rem;
+      transition: transform 0.25s;
+    }
+
+    .cf-submit:hover .cf-submit-arrow { transform: translateX(4px); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--black);
+    }
+
+    .footer-copy {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.06em;
+    }
+
+    .footer-links {
+      display: flex; gap: 1.8rem; list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--black); }
+
+    /* ─── SCROLL REVEAL ─── */
+    .r {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .r.in { opacity: 1; transform: none; }
+    .r-d1 { transition-delay: 0.1s; }
+    .r-d2 { transition-delay: 0.2s; }
+    .r-d3 { transition-delay: 0.3s; }
+    .r-d4 { transition-delay: 0.4s; }
+    .r-d5 { transition-delay: 0.5s; }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes up {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: none; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">Pâne</a>
+    <ul class="nav-links">
+      <li><a href="#signature">시그니처</a></li>
+      <li><a href="#menu">메뉴</a></li>
+      <li><a href="#info">방문 안내</a></li>
+    </ul>
+    <a class="nav-cta" href="#contact">예약·문의</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-main">
+      <div class="hero-text">
+        <p class="hero-kicker">Artisan Baking · Seoul</p>
+        <h1 class="hero-h1">
+          빵이<br>
+          <em>말하는</em><br>
+          시간
+        </h1>
+        <p class="hero-desc">
+          매일 새벽 직접 반죽하고 구워낸 베이킹.<br>
+          불필요한 것은 덜고, 좋은 재료만 남겼습니다.
+        </p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="#menu">메뉴 보기</a>
+          <a class="btn-ghost" href="#signature">시그니처 베이킹 →</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="geo-ring geo-ring-1"></div>
+        <div class="geo-ring geo-ring-2"></div>
+        <div class="geo-ring geo-ring-3"></div>
+        <div class="hero-big-num">P</div>
+        <div class="hero-label-stack">
+          <div class="big-letter">Pâne</div>
+          <div class="sub-label">Boulangerie · Pâtisserie</div>
+        </div>
+        <div class="hero-corner-tag">Est. 2025</div>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">04:30</div>
+        <div class="stat-label">매일 새벽 시작</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">0</div>
+        <div class="stat-label">방부제 무첨가</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">Daily</div>
+        <div class="stat-label">당일 제조 · 당일 판매</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIGNATURE -->
+  <section class="signature" id="signature">
+    <div class="signature-header r">
+      <div>
+        <p class="section-label">Signature Baking</p>
+        <h2 class="signature-title">Pâne의<br><em>시그니처</em></h2>
+      </div>
+      <p class="signature-intro r r-d1">
+        가장 자신 있는 것만 모았습니다.
+        수백 번 반복해 완성한 레시피,
+        매일 같은 손으로 만들어 냅니다.
+      </p>
+    </div>
+
+    <div class="signature-grid">
+      <div class="sig-card sig-card-main r">
+        <div class="sig-card-num">01</div>
+        <p class="sig-tag">Signature No.1</p>
+        <h3 class="sig-name">천연 발효<br>사워도우</h3>
+        <p class="sig-desc">
+          5년 된 르뱅(levain)으로 48시간 저온 발효.
+          두꺼운 크러스트와 불규칙한 기공,
+          깊고 산미 있는 풍미가 특징입니다.
+          홀 로프와 슬라이스 모두 판매.
+        </p>
+      </div>
+      <div class="sig-card r r-d1">
+        <div class="sig-card-num">02</div>
+        <p class="sig-tag">Signature No.2</p>
+        <h3 class="sig-name">버터 크루아상</h3>
+        <p class="sig-desc">AOP 버터 72시간 접기 반죽. 결이 살아 있는 바삭한 외피.</p>
+      </div>
+      <div class="sig-card r r-d2">
+        <div class="sig-card-num">03</div>
+        <p class="sig-tag">Signature No.3</p>
+        <h3 class="sig-name">얼그레이 파운드</h3>
+        <p class="sig-desc">베르가못 향이 짙은 국산 얼그레이. 촉촉한 밀도.</p>
+      </div>
+      <div class="sig-card r r-d3">
+        <div class="sig-card-num">04</div>
+        <p class="sig-tag">Signature No.4</p>
+        <h3 class="sig-name">크림치즈 베이글</h3>
+        <p class="sig-desc">직접 만든 크림치즈와 케이퍼. 겉은 쫄깃, 속은 부드럽게.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="menu" id="menu">
+    <div class="menu-header r">
+      <div>
+        <p class="section-label">Full Menu</p>
+        <h2 class="menu-title">전체 <em>메뉴</em></h2>
+      </div>
+      <p class="menu-note r r-d1">
+        메뉴는 재료 수급 상황에 따라 변경될 수 있습니다.
+        당일 소진 시 품절로 표시됩니다.
+      </p>
+    </div>
+
+    <div class="menu-categories">
+      <button class="menu-cat-btn active" onclick="filterMenu('all', this)">전체</button>
+      <button class="menu-cat-btn" onclick="filterMenu('bread', this)">브레드</button>
+      <button class="menu-cat-btn" onclick="filterMenu('pastry', this)">페이스트리</button>
+      <button class="menu-cat-btn" onclick="filterMenu('cake', this)">케이크</button>
+      <button class="menu-cat-btn" onclick="filterMenu('drink', this)">음료</button>
+    </div>
+
+    <div class="menu-list" id="menuList">
+      <div class="menu-row r" data-cat="bread">
+        <span class="menu-row-idx">01</span>
+        <div class="menu-row-info">
+          <div class="menu-row-name">천연 발효 사워도우 (홀)</div>
+          <div class="menu-row-desc">르뱅 48h · 통밀 20% 블렌딩 · 당일 제조</div>
+        </div>
+        <span class="menu-row-price">₩ 18,000</span>
+      </div>
+      <div class="menu-row r r-d1" data-cat="bread">
+        <span class="menu-row-idx">02</span>
+        <div class="menu-row-info">
+          <div class="menu-row-name">크림치즈 베이글</div>
+          <div class="menu-row-desc">직접 만든 크림치즈 · 케이퍼 · 딜</div>
+        </div>
+        <span class="menu-row-price">₩ 6,500</span>
+      </div>
+      <div class="menu-row r r-d2" data-cat="bread">
+        <span class="menu-row-idx">03</span>
+        <div class="menu-row-info">
+          <div class="menu-row-name">포카치아</div>
+          <div class="menu-row-desc">올리브오일 · 로즈마리 · 플뢰르 드 셀</div>
+        </div>
+        <span class="menu-row-price">₩ 5,000</span>
+      </div>
+      <div class="menu-row r r-d1" data-cat="pastry">
+        <span class="menu-row-idx">04</span>
+        <div class="menu-row-info">
+          <div class="menu-row-name">버터 크루아상</div>
+          <div class="menu-row-desc">AOP 버터 · 72h 저온 발효 접기 반죽</div>
+        </div>
+        <span class="menu-row-price">₩ 4,800</span>
+      </div>
+      <div class="menu-row r r-d2" data-cat="pastry">
+        <span class="menu-row-idx">05</span>
+        <div class="menu-row-info">
+          <div class="menu-row-name">아몬드 크루아상</div>
+          <div class="menu-row-desc">프랑지판 · 슬라이스 아몬드 · 슈가파우더</div>
+        </div>
+        <span class="menu-row-price">₩ 5,500</span>
+      </div>
+      <div class="menu-row r r-d3" data-cat="pastry">
+        <span class="menu-row-idx">06</span>
+        <div class="menu-row-info">
+          <div class="menu-row-name">판 오 쇼콜라</div>
+          <div class="menu-row-desc">발로나 70% 다크 초콜릿 스틱</div>
+        </div>
+        <span class="menu-row-price">₩ 5,200</span>
+      </div>
+      <div class="menu-row r r-d1" data-cat="cake">
+        <span class="menu-row-idx">07</span>
+        <div class="menu-row-info">
+          <div class="menu-row-name">얼그레이 파운드케이크</div>
+          <div class="menu-row-desc">국산 얼그레이 · 베르가못 글레이즈</div>
+        </div>
+        <span class="menu-row-price">₩ 6,800</span>
+      </div>
+      <div class="menu-row r r-d2" data-cat="cake">
+        <span class="menu-row-idx">08</span>
+        <div class="menu-row-info">
+          <div class="menu-row-name">주문 제작 케이크</div>
+          <div class="menu-row-desc">3일 전 예약 필수 · 맞춤 디자인 상담 가능</div>
+        </div>
+        <span class="menu-row-price">₩ 48,000 ~</span>
+      </div>
+      <div class="menu-row r r-d1" data-cat="drink">
+        <span class="menu-row-idx">09</span>
+        <div class="menu-row-info">
+          <div class="menu-row-name">플랫 화이트</div>
+          <div class="menu-row-desc">에티오피아 싱글 오리진 · 직접 로스팅</div>
+        </div>
+        <span class="menu-row-price">₩ 5,500</span>
+      </div>
+      <div class="menu-row r r-d2" data-cat="drink">
+        <span class="menu-row-idx">10</span>
+        <div class="menu-row-info">
+          <div class="menu-row-name">하우스 레몬에이드</div>
+          <div class="menu-row-desc">직접 만든 레몬 청 · 탄산수</div>
+        </div>
+        <span class="menu-row-price">₩ 6,000</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- INFO -->
+  <section class="info" id="info">
+    <div class="info-block r">
+      <p class="section-label">Visit Us</p>
+      <h2 class="info-title">위치 &<br><em>영업시간</em></h2>
+      <table class="info-table">
+        <tr>
+          <td>위치</td>
+          <td>서울 마포구 연남동 000-00<br>홍대입구역 3번 출구 도보 5분</td>
+        </tr>
+        <tr>
+          <td>영업시간</td>
+          <td>
+            화 – 금 &nbsp; 09:00 – 19:00<br>
+            토 – 일 &nbsp; 08:30 – 20:00<br>
+            월요일 <span class="info-closed">휴무</span>
+          </td>
+        </tr>
+        <tr>
+          <td>주차</td>
+          <td>건물 내 2시간 무료</td>
+        </tr>
+        <tr>
+          <td>연락처</td>
+          <td>02-000-0000</td>
+        </tr>
+      </table>
+      <div class="map-placeholder">
+        <div class="map-pin">
+          <div class="map-pin-dot"></div>
+          <div class="map-pin-label">Pâne · 연남동</div>
+        </div>
+      </div>
+    </div>
+    <div class="info-block r r-d1">
+      <p class="section-label">Connect</p>
+      <h2 class="info-title">SNS &<br><em>소식</em></h2>
+      <table class="info-table">
+        <tr>
+          <td>Instagram</td>
+          <td>@pane.seoul<br><small style="color:var(--text-secondary);font-size:0.82rem">메뉴 업데이트, 신메뉴 소식</small></td>
+        </tr>
+        <tr>
+          <td>카카오톡</td>
+          <td>@panesoeul 채널<br><small style="color:var(--text-secondary);font-size:0.82rem">예약 및 주문 문의 채널</small></td>
+        </tr>
+        <tr>
+          <td>이메일</td>
+          <td>hello@pane.kr</td>
+        </tr>
+        <tr>
+          <td>네이버<br>예약</td>
+          <td>네이버 '파네 연남' 검색 후 예약</td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact-left r">
+      <p class="section-label">Reservation & Order</p>
+      <h2 class="contact-title">예약 &<br><em>주문 문의</em></h2>
+      <p class="contact-body">
+        주문 제작 케이크, 대량 주문, 케이터링 문의는
+        아래 양식이나 채널로 연락 주세요.
+        보통 1 영업일 이내에 답변 드립니다.
+      </p>
+      <div class="contact-channels">
+        <a class="contact-ch" href="#">
+          <span class="ch-pill">KakaoTalk</span>
+          @panesoeul 채널 문의
+        </a>
+        <a class="contact-ch" href="#">
+          <span class="ch-pill">Instagram</span>
+          DM으로 문의하기
+        </a>
+        <a class="contact-ch" href="mailto:hello@pane.kr">
+          <span class="ch-pill">Email</span>
+          hello@pane.kr
+        </a>
+      </div>
+    </div>
+
+    <div class="contact-form r r-d1">
+      <div class="cf-row">
+        <div class="cf-group">
+          <span class="cf-label">이름</span>
+          <input class="cf-input" type="text" placeholder="홍길동" />
+        </div>
+        <div class="cf-group">
+          <span class="cf-label">연락처</span>
+          <input class="cf-input" type="tel" placeholder="010-0000-0000" />
+        </div>
+      </div>
+      <div class="cf-full">
+        <span class="cf-label">문의 종류</span>
+        <select class="cf-select">
+          <option value="">선택해 주세요</option>
+          <option>주문 제작 케이크</option>
+          <option>대량 주문 / 케이터링</option>
+          <option>공간 대관</option>
+          <option>기타</option>
+        </select>
+      </div>
+      <div class="cf-row">
+        <div class="cf-group">
+          <span class="cf-label">희망 날짜</span>
+          <input class="cf-input" type="date" />
+        </div>
+        <div class="cf-group">
+          <span class="cf-label">인원 / 수량</span>
+          <input class="cf-input" type="text" placeholder="예: 2인용 케이크" />
+        </div>
+      </div>
+      <div class="cf-full">
+        <span class="cf-label">문의 내용</span>
+        <textarea class="cf-textarea" placeholder="원하시는 내용을 자유롭게 적어주세요."></textarea>
+      </div>
+      <button class="cf-submit">
+        <span>문의 보내기</span>
+        <span class="cf-submit-arrow">→</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-logo">Pâne</span>
+    <span class="footer-copy">© 2025 Pâne Seoul. All rights reserved.</span>
+    <ul class="footer-links">
+      <li><a href="#signature">시그니처</a></li>
+      <li><a href="#menu">메뉴</a></li>
+      <li><a href="#contact">문의</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const els = document.querySelectorAll('.r');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.1 });
+    els.forEach(el => io.observe(el));
+
+    // Nav compact on scroll
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      nav.style.height = window.scrollY > 60 ? '52px' : '64px';
+    });
+
+    // Menu filter
+    function filterMenu(cat, btn) {
+      document.querySelectorAll('.menu-cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.menu-row').forEach(row => {
+        const show = cat === 'all' || row.dataset.cat === cat;
+        row.style.display = show ? 'grid' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>
